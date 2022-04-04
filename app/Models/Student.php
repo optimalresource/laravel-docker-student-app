@@ -27,4 +27,8 @@ class Student extends Model
     public function user() {
         return $this->belongsTo('App\Models\User', 'user_id'); 
     }
+
+    public function studentCourses() {
+        return $this->hasMany(StudentCourse::class, 'id', 'student_id');
+    }
 }

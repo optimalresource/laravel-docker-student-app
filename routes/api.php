@@ -51,11 +51,11 @@ Route::group(['prefix' => 'v1/courses', 'middleware' => 'api'], function () use 
 });
 
 Route::group(['prefix' => 'v1/student_courses', 'middleware' => 'api'], function () use ($router) {
-    Route::get('/', [StudentCourseController::class,'index']);
+    Route::get('/me', [StudentCourseController::class,'index']);
     Route::get('/', [StudentCourseController::class,'courseStudents']);
     Route::get('{studentCourse}', [StudentCourseController::class,'show']);
     Route::post('/', [StudentCourseController::class,'store']);
-    Route::put('{course}', [StudentCourseController::class,'update']);
-    Route::delete('{course}', [StudentCourseController::class,'destroy']);
+    Route::put('{studentCourse}', [StudentCourseController::class,'update']);
+    Route::delete('{studentCourse}', [StudentCourseController::class,'destroy']);
 });
 

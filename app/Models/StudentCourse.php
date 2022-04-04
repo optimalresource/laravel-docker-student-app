@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Students;
+use App\Models\Student;
 
 class StudentCourse extends Model
 {
@@ -18,7 +18,7 @@ class StudentCourse extends Model
     ];
 
     public function student() {
-        return $this->belongsTo('App\Models\Student', 'student_id'); 
+        return $this->belongsTo(Student::class); 
     }
 
     public function course() {
@@ -26,10 +26,10 @@ class StudentCourse extends Model
     }
 
     public function students() {
-        return $this->hasMany(Students::class, 'id', 'student_id');
+        return $this->hasMany(Student::class, 'id', 'student_id');
     }
 
     public function courses() {
-        return $this->hasMany(Courses::class, 'id', 'course_id');
+        return $this->hasMany(Course::class, 'id', 'course_id');
     }
 }

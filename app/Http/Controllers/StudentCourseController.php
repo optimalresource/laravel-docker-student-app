@@ -65,7 +65,7 @@ class StudentCourseController extends Controller
             }
             
             $studentCourse = [];
-            $studentCourse['student_id'] = auth()->user()->id;
+            $studentCourse['student_id'] = auth()->user()->student->id;
             $studentCourse['course_id'] = $request->input('course_id');
             $newStudentCourse = StudentCourse::create($studentCourse);
 
@@ -142,10 +142,10 @@ class StudentCourseController extends Controller
     public function destroy(StudentCourse $studentCourse)
     {
         try {
-            if(auth()->user()->id !== $studentCourse->student->id && auth()->user()->role !== "admin"){
+            if(auth()->user()->id !== $studentCourse->student->user_id && auth()->user()->role !== "admin"){
                 return response("You are unauthorized", 401);
             }
-            if($course->delete()){
+            if($studentCourse->delete()){
                 return response("Student course deleted successfully");
             }
         }catch(Exception $e) {
