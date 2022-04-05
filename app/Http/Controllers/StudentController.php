@@ -63,8 +63,7 @@ class StudentController extends Controller
         try{
             $student_check = Student::where('user_id', '=', auth()->user()->id)->exists();
             if($student_check) {
-                return response("Student already exist", 400);
-                // Can as well run an update here instead of an error response
+                return $this->update($request);
             }
             $student = [];
             $student['user_id'] = auth()->user()->id;
@@ -142,18 +141,18 @@ class StudentController extends Controller
         }
     }
 
-    public function courseStudents($id) {
-        try {
-            if(is_nan($id)) {
-                return response("Invalid course id supplied");
-            }
-            $id = strip_tags($id);
-            $students = DB::select("SELECT * FROM students s 
-                        LEFT JOIN student_courses sc ON sc.student_id = s.id
-                        WHERE sc.course_id = 2 ORDER BY sc.id DESC");
-            return response($students);
-        }catch(Exception $e) {
-            return response("A server error occured", 500);
-        }
-    }
+    // public function courseStudents($id) {
+    //     try {
+    //         if(is_nan($id)) {
+    //             return response("Invalid course id supplied");
+    //         }
+    //         $id = strip_tags($id);
+    //         $students = DB::select("SELECT * FROM students s 
+    //                     LEFT JOIN student_courses sc ON sc.student_id = s.id
+    //                     WHERE sc.course_id = 2 ORDER BY sc.id DESC");
+    //         return response($students);
+    //     }catch(Exception $e) {
+    //         return response("A server error occured", 500);
+    //     }
+    // }
 }

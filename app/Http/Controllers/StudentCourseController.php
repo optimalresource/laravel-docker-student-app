@@ -12,7 +12,7 @@ class StudentCourseController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['show']]);
+        $this->middleware('auth:api');
     }
 
     /**
@@ -52,7 +52,7 @@ class StudentCourseController extends Controller
      */
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
-            'course_id' => 'required|integer',
+            'course_id' => 'required|integer|exists:courses,id',
         ]);
 
         if ($validator->fails()){
@@ -97,36 +97,46 @@ class StudentCourseController extends Controller
      * @param  \App\Models\StudentCourse  $studentCourse
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StudentCourse $studentCourse)
+    public function start(Request $request, StudentCourse $studentCourse)
     {
-        $validator = Validator::make($request->all(), [
-            'action' => 'required|string',
-        ]);
-
         try {
-            if(strtolower($request->input('action')) === 'start') {
-                if(is_null($studentCourse->course_completion_date)) {
-                    if(!is_null($studentCourse->course_start_date)) {
-                        return response("Course has been started already", 400);
-                    }
-                    $studentCourse->course_start_date = date('Y-m-d H:i:s', time());
-                    if($studentCourse->save()) {
-                        return response("Course started successfully", 200);
-                    }
-                }else {
-                    return response("Course has been completed and cannot restart", 400);
+            if(is_null($studentCourse->course_completion_date)) {
+                if(!is_null($studentCourse->course_start_date)) {
+                    return response("Course has been started already", 400);
                 }
+                $studentCourse->course_start_date = date('Y-m-d H:i:s', time());
+                if($studentCourse->save()) {
+                    return response("Course started successfully", 200);
+                }
+            }else {
+                return response("Course has been completed and cannot restart", 400);
             }
+        }catch(\Exception $e) {
+            return response("A server error occurred", 500);
+        }
+    }
 
-            if(strtolower($request->input('action')) === 'complete') {
-                if(is_null($studentCourse->course_completion_date)) {
-                    $studentCourse->course_completion_date = date('Y-m-d H:i:s', time());
-                    if($studentCourse->save()) {
-                        return response("Course completed successfully", 200);
-                    }
-                }else {
-                    return response("Course has been completed already", 400);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\StudentCourse  $studentCourse
+     * @return \Illuminate\Http\Response
+     */
+    public function complete(Request $request, StudentCourse $studentCourse)
+    {
+        try {
+            if(is_null($studentCourse->course_completion_date)) {
+                if(is_null($studentCourse->course_start_date)) {
+                    return response("Course hasn't started yet", 400);
                 }
+
+                $studentCourse->course_completion_date = date('Y-m-d H:i:s', time());
+                if($studentCourse->save()) {
+                    return response("Course completed successfully", 200);
+                }
+            }else {
+                return response("Course has been completed already", 400);
             }
         }catch(\Exception $e) {
             return response("A server error occurred", 500);
@@ -143,7 +153,7 @@ class StudentCourseController extends Controller
     {
         try {
             if(auth()->user()->id !== $studentCourse->student->user_id && auth()->user()->role !== "admin"){
-                return response("You are unauthorized", 401);
+                return response(["message" => "Unauthorized"], 401);
             }
             if($studentCourse->delete()){
                 return response("Student course deleted successfully");

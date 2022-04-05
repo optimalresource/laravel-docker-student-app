@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Class Controller
+ * @package App\Http\Controllers
+ * @OA\OpenApi(
+ *     @OA\Info(
+ *         version="1.0.0",
+ *         title="Laravel Student Application",
+ *         @OA\License(name="MIT")
+ *     ),
+ *     @OA\Server(
+ *         description="API server",
+ *         url="http://api.laravel-swagger-tutorial.test/",
+ *     ),
+ * )
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

@@ -55,9 +55,9 @@ class CourseController extends Controller
         }
 
         try{
-            $student_check = Course::where('course_title', '=', strip_tags($request->input('course_title')))->exists();
-            if($student_check) {
-                return response("Course already exist", 400);
+            $courseObj = Course::where('course_title', '=', strip_tags($request->input('course_title')))->first();
+            if($courseObj) {
+                return $this->update($request, $courseObj);
             }
             $course = [];
             $course['created_by'] = auth()->user()->id;
@@ -100,6 +100,12 @@ class CourseController extends Controller
         try {            
             if($request->input('course_duration_in_months') !== null) {
                 if(is_nan($request->input('course_duration_in_months'))) return response("Invalid course duration supplied", 400);
+            }
+
+            $courseObj = Course::where('course_title', '=', strip_tags($request->input('course_title')))->where('id', '!=', $course->id)->first();
+
+            if($courseObj) {
+                return response("Cannot use this title again, it belongs to another course", 403);
             }
 
             $course->course_title = $request->input('course_title') !== null ? strip_tags($request->input('course_title')) : $course->course_title;
