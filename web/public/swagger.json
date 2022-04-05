@@ -1,1446 +1,1394 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "Laravel Docker Student Application",
-    "description": "This is a small API resource which powers a simple frontend where users can register, set up student profile, create new courses and subscribe to a course. It is simply a study app but not very exhaustive",
-    "termsOfService": "http://landearn.com",
-    "contact": {
-      "email": "joseph@landearn.com"
-    },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "version": "1.0.0"
-  },
-  "externalDocs": {
-    "description": "Find out more about Joseph",
-    "url": "http://github.com/optimalresource"
-  },
-  "servers": [
-    {
-      "url": "http://localhost:8000/api/v1"
-    }
-  ],
-  "tags": [
-    {
-      "name": "auth",
-      "description": "User authentication endpoints",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://landearn.com"
-      }
-    },
-    {
-      "name": "students",
-      "description": "Student detail",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://landearn.com"
-      }
-    },
-    {
-      "name": "courses",
-      "description": "Courses available for subscription",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://landearn.com"
-      }
-    },
-    {
-      "name": "student courses",
-      "description": "Courses subscribed by a student",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://landearn.com"
-      }
-    }
-  ],
-  "paths": {
-    "/auth/signup": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "Sign up to get access",
-        "description": "This endpoint will help a user to sign up for the first time.",
-        "operationId": "signUp",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "email",
-                  "password"
-                ],
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "Email address"
-                  },
-                  "password": {
-                    "type": "string",
-                    "description": "Password"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Laravel Docker Student Application",
+        "description": "This is a small API resource which powers a simple frontend where users can register, set up student profile, create new courses and subscribe to a course. It is simply a study app but not very exhaustive",
+        "termsOfService": "http://landearn.com",
+        "contact": {
+            "email": "joseph@landearn.com"
         },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Token"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Validation errors",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "Login to get access",
-        "description": "This endpoint will help a user to login.",
-        "operationId": "login",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "email",
-                  "password"
-                ],
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "Email address",
-                    "example": "josephilo2002@gmail.com"
-                  },
-                  "password": {
-                    "type": "string",
-                    "description": "Password",
-                    "example": "justme2802"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Token"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {}
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
+        "version": "1.0.0"
     },
-    "/auth/refresh": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "Login to get access",
-        "description": "This endpoint will help a user to login.",
-        "operationId": "refreshToken",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Token"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {}
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
+    "externalDocs": {
+        "description": "Find out more about Joseph",
+        "url": "http://github.com/optimalresource"
     },
-    "/auth/me": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "Fetch logged in user info",
-        "description": "This endpoint will help a user to login.",
-        "operationId": "getActiveUserDetails",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {}
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
+    "servers": [
+        {
+            "url": "http://ec2-3-93-60-154.compute-1.amazonaws.com/api/v1"
         }
-      }
-    },
-    "/auth/logout": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "summary": "Log out user",
-        "description": "This endpoint will help alog a user out.",
-        "operationId": "LogOutUser",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoggedOut"
-                }
-              }
+    ],
+    "tags": [
+        {
+            "name": "auth",
+            "description": "User authentication endpoints",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://landearn.com"
             }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/students": {
-      "post": {
-        "tags": [
-          "students"
-        ],
-        "summary": "Submit student detail",
-        "description": "Submit student personal details for the first time. (Required user to be logged in, if not logged in, log in, then copy the access token and click the authorize button to paste the token.)",
-        "operationId": "postStudentDetail",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Student"
-              }
-            }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StudentModel"
-                }
-              }
+        {
+            "name": "students",
+            "description": "Student detail",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://landearn.com"
             }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Validation errors",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "students"
-        ],
-        "summary": "Edit student detail",
-        "description": "Edit already set student personal details. (Required user to be logged in, if not logged in, log in, then copy the access token and click the authorize button to paste the token.)",
-        "operationId": "editStudentDetail",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Student"
-              }
-            }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StudentModel"
-                }
-              }
+        {
+            "name": "courses",
+            "description": "Courses available for subscription",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://landearn.com"
             }
-          },
-          "400": {
-            "description": "Student detail not found",
-            "content": {}
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "students"
-        ],
-        "summary": "Fetch authenticated user's student detail",
-        "description": "Fetch student personal details for the logged in user. (Required user to be logged in, if not logged in, log in, then copy the access token and click the authorize button to paste the token.)",
-        "operationId": "getStudentDetail",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StudentModel"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/students/{student}": {
-      "get": {
-        "tags": [
-          "students"
-        ],
-        "summary": "Get specific student detail",
-        "description": "Get specific student personal details. Auth not required",
-        "operationId": "getSpecificStudentDetail",
-        "parameters": [
-          {
-            "name": "student",
-            "in": "path",
-            "description": "Student ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StudentModel"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/404NotFoundErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/students/all": {
-      "get": {
-        "tags": [
-          "students"
-        ],
-        "summary": "Get all students",
-        "description": "Get all students. Auth not required",
-        "operationId": "getAllStudents",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/StudentModel"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/courses": {
-      "post": {
-        "tags": [
-          "courses"
-        ],
-        "summary": "Create a new course. Auth required",
-        "description": "Create a new subscribable course. Auth required.",
-        "operationId": "postCourse",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Course"
-              }
-            }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CourseModel"
-                }
-              }
+        {
+            "name": "student courses",
+            "description": "Courses subscribed by a student",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://landearn.com"
             }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Cannot use this title again, it belongs to another course"
-          },
-          "404": {
-            "description": "Validation errors",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
         }
-      },
-      "get": {
-        "tags": [
-          "courses"
-        ],
-        "summary": "Fetch all courses created by user. Auth required",
-        "description": "Fetch all courses created by logged in user. Auth required",
-        "operationId": "getAllActiveUserCreatedCourses",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CourseModel"
-                  }
+    ],
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Sign up to get access",
+                "description": "This endpoint will help a user to sign up for the first time.",
+                "operationId": "signUp",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["email", "password"],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email address",
+                                        "example": "josephilo2002@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Password",
+                                        "example": "lowkey20"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Token"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
                 }
-              }
             }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/courses/{course}": {
-      "put": {
-        "tags": [
-          "courses"
-        ],
-        "summary": "Edit course. Auth required.",
-        "operationId": "editCourse",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Course"
-              }
-            }
-          },
-          "required": true
         },
-        "parameters": [
-          {
-            "name": "course",
-            "in": "path",
-            "description": "Course ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CourseModel"
+        "/auth/login": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Login to get access",
+                "description": "This endpoint will help a user to login.",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": ["email", "password"],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Email address",
+                                        "example": "josephilo2002@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Password",
+                                        "example": "lowkey20"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Token"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
                 }
-              }
             }
-          },
-          "400": {
-            "description": "Course not found",
-            "content": {}
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Cannot use this title again, it belongs to another course"
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "courses"
-        ],
-        "summary": "Fetch a specific course.",
-        "description": "Fetch a specific course by course ID.",
-        "operationId": "getCourse",
-        "parameters": [
-          {
-            "name": "course",
-            "in": "path",
-            "description": "Course ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CourseModel"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found"
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "courses"
-        ],
-        "summary": "Delete a specific course. Auth required",
-        "description": "Delete a specific course by course ID. Auth required.",
-        "operationId": "deleteCourse",
-        "parameters": [
-          {
-            "name": "course",
-            "in": "path",
-            "description": "Course ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CourseModel"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found"
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/courses/all": {
-      "get": {
-        "tags": [
-          "courses"
-        ],
-        "summary": "Fetch all courses.",
-        "description": "Fetch all courses in the application.",
-        "operationId": "getAllCourses",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CourseModel"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/student_courses": {
-      "post": {
-        "tags": [
-          "student courses"
-        ],
-        "summary": "Create a new course. Auth required",
-        "description": "Create a new subscribable course. Auth required.",
-        "operationId": "postStudentCourse",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StudentCourse"
-              }
-            }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CourseModel"
+        "/auth/refresh": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Login to get access",
+                "description": "This endpoint will help a user to login.",
+                "operationId": "refreshToken",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Token"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
                 }
-              }
             }
-          },
-          "400": {
-            "description": "Course already subscribed"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Validation errors",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "student courses"
-        ],
-        "summary": "Get all students taking a course. Auth required.",
-        "description": "Get all students taking a course. Auth required.",
-        "operationId": "getAllCourseStudents",
-        "parameters": [
-          {
-            "name": "course_id",
-            "in": "query",
-            "description": "Course ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CourseModel"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/student_courses/{studentCourse}": {
-      "get": {
-        "tags": [
-          "student courses"
-        ],
-        "summary": "Get a student course. Auth required.",
-        "description": "Get a student course. Auth required.",
-        "operationId": "getStudentCourse",
-        "parameters": [
-          {
-            "name": "studentCourse",
-            "in": "path",
-            "description": "Student Course ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CourseModel"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/404NotFoundErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "student courses"
-        ],
-        "summary": "Delete a student course. Auth required.",
-        "description": "Delete a student course. Auth required.",
-        "operationId": "deleteStudentCourse",
-        "parameters": [
-          {
-            "name": "studentCourse",
-            "in": "path",
-            "description": "Student Course ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Student course deleted successfully"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/404NotFoundErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/student_courses/{studentCourse}/start": {
-      "put": {
-        "tags": [
-          "student courses"
-        ],
-        "summary": "Start a course. Auth required.",
-        "description": "Start a course. Auth required.",
-        "operationId": "startCourse",
-        "parameters": [
-          {
-            "name": "studentCourse",
-            "in": "path",
-            "description": "Student Course ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Course started successfully"
-          },
-          "400": {
-            "description": "Course has been started already"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/404NotFoundErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/student_courses/{studentCourse}/complete": {
-      "put": {
-        "tags": [
-          "student courses"
-        ],
-        "summary": "Complete a course. Auth required.",
-        "description": "Complete a course. Auth required.",
-        "operationId": "completeCourse",
-        "parameters": [
-          {
-            "name": "studentCourse",
-            "in": "path",
-            "description": "Student Course ID",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Course completed successfully"
-          },
-          "400": {
-            "description": "Course has been completed already"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/404NotFoundErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/student_courses/me": {
-      "get": {
-        "tags": [
-          "student courses"
-        ],
-        "summary": "Get all courses enrolled by active user. Auth required.",
-        "description": "Get all courses enrolled by active user. Auth required.",
-        "operationId": "getStudentCourses",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CourseModel"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "A server error occured",
-            "content": {}
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Token": {
-        "type": "object",
-        "properties": {
-          "access_token": {
-            "type": "string",
-            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvYXV0aFwvcmVmcmVzaCIsImlhdCI6MTY0OTE0Mzc2NSwiZXhwIjoxNjQ5MTQ4Njg2LCJuYmYiOjE2NDkxNDUwODYsImp0aSI6IjFIS3c4ZTc4WXNpOE9udHEiLCJzdWIiOjQsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.fP322EEYKVq84MIPuQD8pcvEE3jV5ri0bOhRmWp-GTk"
-          },
-          "token_type": {
-            "type": "string",
-            "example": "bearer"
-          },
-          "expires_in": {
-            "type": "string",
-            "example": 3600
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "example": 4
-          },
-          "role": {
-            "type": "string",
-            "example": "user"
-          },
-          "email": {
-            "type": "string",
-            "example": "josephilo2001@gmail.com"
-          },
-          "email_verified_at": {
-            "type": "string",
-            "example": null
-          },
-          "created_at": {
-            "type": "string",
-            "example": "2022-04-04T20:54:55.000Z"
-          },
-          "updated_at": {
-            "type": "string",
-            "example": "2022-04-04T20:54:55.000Z"
-          }
-        }
-      },
-      "LoggedOut": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Successfully logged out"
-          }
-        }
-      },
-      "Student": {
-        "required": [
-          "title",
-          "first_name",
-          "last_name",
-          "str_address1",
-          "city",
-          "country",
-          "post_code",
-          "phone",
-          "dob"
-        ],
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "first_name": {
-            "type": "string"
-          },
-          "last_name": {
-            "type": "string"
-          },
-          "str_address1": {
-            "type": "string"
-          },
-          "str_address2": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "post_code": {
-            "type": "string"
-          },
-          "phone": {
-            "type": "string"
-          },
-          "altPhone": {
-            "type": "string"
-          },
-          "dob": {
-            "type": "string"
-          }
         },
-        "example": {
-          "title": "Mr",
-          "first_name": "Joshua",
-          "last_name": "Okafor",
-          "str_address1": "No 6 Agofuranyo",
-          "city": "Ibeju Lekki",
-          "country": "Nigeria",
-          "post_code": "105101",
-          "phone": "09053838389",
-          "dob": "28th Feb"
+        "/auth/me": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Fetch logged in user info",
+                "description": "This endpoint will help a user to login.",
+                "operationId": "getActiveUserDetails",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
         },
-        "xml": {
-          "name": "Student"
-        }
-      },
-      "Course": {
-        "required": [
-          "course_title",
-          "course_description",
-          "course_cost_in_dollars",
-          "course_duration_in_months"
-        ],
-        "type": "object",
-        "properties": {
-          "course_title": {
-            "type": "string"
-          },
-          "course_description": {
-            "type": "string"
-          },
-          "course_cost_in_dollars": {
-            "type": "string"
-          },
-          "course_duration_in_months": {
-            "type": "integer",
-            "format": "int64"
-          }
+        "/auth/logout": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Log out user",
+                "description": "This endpoint will help alog a user out.",
+                "operationId": "LogOutUser",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoggedOut"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    }
+                }
+            }
         },
-        "example": {
-          "course_title": "Chemistry",
-          "course_description": "A Maths course",
-          "course_cost_in_dollars": "200",
-          "course_duration_in_months": 12
-        },
-        "xml": {
-          "name": "Course"
-        }
-      },
-      "StudentCourse": {
-        "required": [
-          "course_id"
-        ],
-        "type": "object",
-        "properties": {
-          "course_id": {
-            "type": "integer",
-            "format": "int64"
-          }
-        },
-        "example": {
-          "course_id": 3
-        },
-        "xml": {
-          "name": "Course"
-        }
-      },
-      "StudentModel": {
-        "type": "object",
-        "properties": {
-          "user_id": {
-            "type": "integer",
-            "example": 4
-          },
-          "title": {
-            "type": "string",
-            "example": "Mr"
-          },
-          "first_name": {
-            "type": "string",
-            "example": "Joshua"
-          },
-          "last_name": {
-            "type": "string",
-            "example": "Okafor"
-          },
-          "str_address1": {
-            "type": "string",
-            "example": "No 6 Agofuranyo"
-          },
-          "str_address2": {
-            "type": "string",
-            "example": ""
-          },
-          "city": {
-            "type": "string",
-            "example": "Ibeju Lekki"
-          },
-          "post_code": {
-            "type": "string",
-            "example": "105101"
-          },
-          "country": {
-            "type": "string",
-            "example": "Nigeria"
-          },
-          "phone": {
-            "type": "string",
-            "example": "09083839932"
-          },
-          "altPhone": {
-            "type": "string",
-            "example": ""
-          },
-          "dob": {
-            "type": "string",
-            "example": "28th Feb"
-          },
-          "updated_at": {
-            "type": "string",
-            "example": "2022-04-04T20:54:55.000Z"
-          },
-          "created_at": {
-            "type": "string",
-            "example": "2022-04-04T20:54:55.000Z"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 2
-          }
-        }
-      },
-      "CourseModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 2
-          },
-          "course_title": {
-            "type": "string",
-            "example": "Physics"
-          },
-          "course_description": {
-            "type": "string",
-            "example": "A physics course"
-          },
-          "course_cost_in_dollars": {
-            "type": "string",
-            "example": "100"
-          },
-          "course_duration_in_months": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
-          },
-          "updated_at": {
-            "type": "string",
-            "example": "2022-04-04T20:54:55.000Z"
-          },
-          "created_at": {
-            "type": "string",
-            "example": "2022-04-04T20:54:55.000Z"
-          }
-        }
-      },
-      "ValidationErrorResponse": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "array",
-            "xml": {
-              "name": "title",
-              "wrapped": true
+        "/students": {
+            "post": {
+                "tags": ["students"],
+                "summary": "Submit student detail",
+                "description": "Submit student personal details for the first time. (Required user to be logged in, if not logged in, log in, then copy the access token and click the authorize button to paste the token.)",
+                "operationId": "postStudentDetail",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Student"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StudentModel"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
             },
-            "items": {
-              "type": "string",
-              "example": "The title field is required."
-            }
-          },
-          "first_name": {
-            "type": "array",
-            "xml": {
-              "name": "first_name",
-              "wrapped": true
+            "put": {
+                "tags": ["students"],
+                "summary": "Edit student detail",
+                "description": "Edit already set student personal details. (Required user to be logged in, if not logged in, log in, then copy the access token and click the authorize button to paste the token.)",
+                "operationId": "editStudentDetail",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Student"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StudentModel"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Student detail not found",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
             },
-            "items": {
-              "type": "string",
-              "example": "The first name field is required."
+            "get": {
+                "tags": ["students"],
+                "summary": "Fetch authenticated user's student detail",
+                "description": "Fetch student personal details for the logged in user. (Required user to be logged in, if not logged in, log in, then copy the access token and click the authorize button to paste the token.)",
+                "operationId": "getStudentDetail",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StudentModel"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
             }
-          }
+        },
+        "/students/{student}": {
+            "get": {
+                "tags": ["students"],
+                "summary": "Get specific student detail",
+                "description": "Get specific student personal details. Auth not required",
+                "operationId": "getSpecificStudentDetail",
+                "parameters": [
+                    {
+                        "name": "student",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StudentModel"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/404NotFoundErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/students/all": {
+            "get": {
+                "tags": ["students"],
+                "summary": "Get all students",
+                "description": "Get all students. Auth not required",
+                "operationId": "getAllStudents",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StudentModel"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/courses": {
+            "post": {
+                "tags": ["courses"],
+                "summary": "Create a new course. Auth required",
+                "description": "Create a new subscribable course. Auth required.",
+                "operationId": "postCourse",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourseModel"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Cannot use this title again, it belongs to another course"
+                    },
+                    "404": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            },
+            "get": {
+                "tags": ["courses"],
+                "summary": "Fetch all courses created by user. Auth required",
+                "description": "Fetch all courses created by logged in user. Auth required",
+                "operationId": "getAllActiveUserCreatedCourses",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CourseModel"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/courses/{course}": {
+            "put": {
+                "tags": ["courses"],
+                "summary": "Edit course. Auth required.",
+                "operationId": "editCourse",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "name": "course",
+                        "in": "path",
+                        "description": "Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourseModel"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Course not found",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Cannot use this title again, it belongs to another course"
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            },
+            "get": {
+                "tags": ["courses"],
+                "summary": "Fetch a specific course.",
+                "description": "Fetch a specific course by course ID.",
+                "operationId": "getCourse",
+                "parameters": [
+                    {
+                        "name": "course",
+                        "in": "path",
+                        "description": "Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourseModel"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["courses"],
+                "summary": "Delete a specific course. Auth required",
+                "description": "Delete a specific course by course ID. Auth required.",
+                "operationId": "deleteCourse",
+                "parameters": [
+                    {
+                        "name": "course",
+                        "in": "path",
+                        "description": "Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourseModel"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/courses/all": {
+            "get": {
+                "tags": ["courses"],
+                "summary": "Fetch all courses.",
+                "description": "Fetch all courses in the application.",
+                "operationId": "getAllCourses",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CourseModel"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/student_courses": {
+            "post": {
+                "tags": ["student courses"],
+                "summary": "Create a new course. Auth required",
+                "description": "Create a new subscribable course. Auth required.",
+                "operationId": "postStudentCourse",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StudentCourse"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourseModel"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Course already subscribed"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            },
+            "get": {
+                "tags": ["student courses"],
+                "summary": "Get all students taking a course. Auth required.",
+                "description": "Get all students taking a course. Auth required.",
+                "operationId": "getAllCourseStudents",
+                "parameters": [
+                    {
+                        "name": "course_id",
+                        "in": "query",
+                        "description": "Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CourseModel"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/student_courses/{studentCourse}": {
+            "get": {
+                "tags": ["student courses"],
+                "summary": "Get a student course. Auth required.",
+                "description": "Get a student course. Auth required.",
+                "operationId": "getStudentCourse",
+                "parameters": [
+                    {
+                        "name": "studentCourse",
+                        "in": "path",
+                        "description": "Student Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourseModel"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/404NotFoundErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["student courses"],
+                "summary": "Delete a student course. Auth required.",
+                "description": "Delete a student course. Auth required.",
+                "operationId": "deleteStudentCourse",
+                "parameters": [
+                    {
+                        "name": "studentCourse",
+                        "in": "path",
+                        "description": "Student Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Student course deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/404NotFoundErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/student_courses/{studentCourse}/start": {
+            "put": {
+                "tags": ["student courses"],
+                "summary": "Start a course. Auth required.",
+                "description": "Start a course. Auth required.",
+                "operationId": "startCourse",
+                "parameters": [
+                    {
+                        "name": "studentCourse",
+                        "in": "path",
+                        "description": "Student Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Course started successfully"
+                    },
+                    "400": {
+                        "description": "Course has been started already"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/404NotFoundErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/student_courses/{studentCourse}/complete": {
+            "put": {
+                "tags": ["student courses"],
+                "summary": "Complete a course. Auth required.",
+                "description": "Complete a course. Auth required.",
+                "operationId": "completeCourse",
+                "parameters": [
+                    {
+                        "name": "studentCourse",
+                        "in": "path",
+                        "description": "Student Course ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Course completed successfully"
+                    },
+                    "400": {
+                        "description": "Course has been completed already"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/404NotFoundErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/student_courses/me": {
+            "get": {
+                "tags": ["student courses"],
+                "summary": "Get all courses enrolled by active user. Auth required.",
+                "description": "Get all courses enrolled by active user. Auth required.",
+                "operationId": "getStudentCourses",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CourseModel"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "A server error occured",
+                        "content": {}
+                    }
+                }
+            }
         }
-      },
-      "UnauthorizedErrorResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Unauthenticated."
-          }
-        }
-      },
-      "404NotFoundErrorResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Record not found."
-          }
-        }
-      }
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
-    }
-  },
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ]
+    "components": {
+        "schemas": {
+            "Token": {
+                "type": "object",
+                "properties": {
+                    "access_token": {
+                        "type": "string",
+                        "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvYXV0aFwvcmVmcmVzaCIsImlhdCI6MTY0OTE0Mzc2NSwiZXhwIjoxNjQ5MTQ4Njg2LCJuYmYiOjE2NDkxNDUwODYsImp0aSI6IjFIS3c4ZTc4WXNpOE9udHEiLCJzdWIiOjQsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.fP322EEYKVq84MIPuQD8pcvEE3jV5ri0bOhRmWp-GTk"
+                    },
+                    "token_type": {
+                        "type": "string",
+                        "example": "bearer"
+                    },
+                    "expires_in": {
+                        "type": "string",
+                        "example": 3600
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 4
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "user"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "josephilo2001@gmail.com"
+                    },
+                    "email_verified_at": {
+                        "type": "string",
+                        "example": null
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2022-04-04T20:54:55.000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2022-04-04T20:54:55.000Z"
+                    }
+                }
+            },
+            "LoggedOut": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Successfully logged out"
+                    }
+                }
+            },
+            "Student": {
+                "required": [
+                    "title",
+                    "first_name",
+                    "last_name",
+                    "str_address1",
+                    "city",
+                    "country",
+                    "post_code",
+                    "phone",
+                    "dob"
+                ],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "str_address1": {
+                        "type": "string"
+                    },
+                    "str_address2": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "post_code": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "altPhone": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "title": "Mr",
+                    "first_name": "Joshua",
+                    "last_name": "Okafor",
+                    "str_address1": "No 6 Agofuranyo",
+                    "city": "Ibeju Lekki",
+                    "country": "Nigeria",
+                    "post_code": "105101",
+                    "phone": "09053838389",
+                    "dob": "28th Feb"
+                },
+                "xml": {
+                    "name": "Student"
+                }
+            },
+            "Course": {
+                "required": [
+                    "course_title",
+                    "course_description",
+                    "course_cost_in_dollars",
+                    "course_duration_in_months"
+                ],
+                "type": "object",
+                "properties": {
+                    "course_title": {
+                        "type": "string"
+                    },
+                    "course_description": {
+                        "type": "string"
+                    },
+                    "course_cost_in_dollars": {
+                        "type": "string"
+                    },
+                    "course_duration_in_months": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "example": {
+                    "course_title": "Chemistry",
+                    "course_description": "A Maths course",
+                    "course_cost_in_dollars": "200",
+                    "course_duration_in_months": 12
+                },
+                "xml": {
+                    "name": "Course"
+                }
+            },
+            "StudentCourse": {
+                "required": ["course_id"],
+                "type": "object",
+                "properties": {
+                    "course_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "example": {
+                    "course_id": 3
+                },
+                "xml": {
+                    "name": "Course"
+                }
+            },
+            "StudentModel": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "integer",
+                        "example": 4
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Mr"
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "example": "Joshua"
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "example": "Okafor"
+                    },
+                    "str_address1": {
+                        "type": "string",
+                        "example": "No 6 Agofuranyo"
+                    },
+                    "str_address2": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "city": {
+                        "type": "string",
+                        "example": "Ibeju Lekki"
+                    },
+                    "post_code": {
+                        "type": "string",
+                        "example": "105101"
+                    },
+                    "country": {
+                        "type": "string",
+                        "example": "Nigeria"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "09083839932"
+                    },
+                    "altPhone": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "dob": {
+                        "type": "string",
+                        "example": "28th Feb"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2022-04-04T20:54:55.000Z"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2022-04-04T20:54:55.000Z"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 2
+                    }
+                }
+            },
+            "CourseModel": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 2
+                    },
+                    "course_title": {
+                        "type": "string",
+                        "example": "Physics"
+                    },
+                    "course_description": {
+                        "type": "string",
+                        "example": "A physics course"
+                    },
+                    "course_cost_in_dollars": {
+                        "type": "string",
+                        "example": "100"
+                    },
+                    "course_duration_in_months": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 10
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2022-04-04T20:54:55.000Z"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2022-04-04T20:54:55.000Z"
+                    }
+                }
+            },
+            "ValidationErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "array",
+                        "xml": {
+                            "name": "title",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "type": "string",
+                            "example": "The title field is required."
+                        }
+                    },
+                    "first_name": {
+                        "type": "array",
+                        "xml": {
+                            "name": "first_name",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "type": "string",
+                            "example": "The first name field is required."
+                        }
+                    }
+                }
+            },
+            "UnauthorizedErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Unauthenticated."
+                    }
+                }
+            },
+            "404NotFoundErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Record not found."
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ]
 }

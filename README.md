@@ -13,6 +13,6 @@ To access the files of the application service, run "docker exec -it php bash"
 To run MySQL queries on the terminal, run "docker exec -it mysql bash"
 
 To check a running instance of this project, vist my instance here and test the endpoints:
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+http://ec2-3-93-60-154.compute-1.amazonaws.com/documentation.html
 
 Thank you.
