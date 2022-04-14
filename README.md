@@ -1,4 +1,4 @@
-# Laravel API Endpoints For Books, Characters and Comments
+# Laravel API Endpoints For Students
 
 This is a project where students can be onboarded, find courses, subscribe to a course, start and complete the courses. It is just a simple demonstration of CRUD operations. The application in the end will be wrapped in a docker container and hosted in the cloud.
 
